@@ -8,7 +8,7 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
     var input = document.createElement('input');
@@ -22,6 +22,7 @@
     input.style.border = '1px solid #ccc';
     input.style.borderRadius = '5px';
     input.style.zIndex = '1000';
+    input.value = 12;
     document.body.appendChild(input);
 
     var button = document.createElement('button');
@@ -38,15 +39,24 @@
     button.style.zIndex = '1000';
     document.body.appendChild(button);
 
+    let rx = "xx"
+
     function updateXXValue(newValue) {
         var textareas = document.querySelectorAll('.server-message textarea');
-        textareas.forEach(function(textarea) {
+        textareas.forEach(function (textarea) {
             var currentText = textarea.value;
-            textarea.value = currentText.replace(/xx/, newValue);
+
+            console.log(textarea);
+            console.log(`Current Text: ${currentText}`);
+            console.log(`Regex Expression: ${rx}`);
+            console.log(`New Value: ${newValue}`)
+
+            textarea.value = currentText.replace(rx, newValue);
+            // console.log(currentText.replace(rx, newValue));
         });
     }
 
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
         var newValue = input.value;
         if (newValue !== '') {
             updateXXValue(newValue);
