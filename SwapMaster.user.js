@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  Replace 'xx' in textareas with a user-defined value
 // @author       You
-// @match        http://localhost:8000/
+// @match        http://127.0.0.1:8000/*
 // @grant        none
 // ==/UserScript==
 
@@ -39,23 +39,40 @@
     button.style.zIndex = '1000';
     document.body.appendChild(button);
 
-    let rx = "xx"
+    let rx = "xx";
+
+    var save_regex_value = document.createElement('div');
+    save_regex_value.style.display = "none";
+    document.body.appendChild(save_regex_value);
+    save_regex_value.setAttribute("regexValue", rx )
+
+
+
+
 
     function updateXXValue(newValue) {
         var textareas = document.querySelectorAll('.server-message textarea');
         textareas.forEach(function (textarea) {
+        textareas.forEach(function (textarea) {
             var currentText = textarea.value;
+        rx = save_regex_value.getAttribute("regexValue")
 
             console.log(textarea);
             console.log(`Current Text: ${currentText}`);
             console.log(`Regex Expression: ${rx}`);
             console.log(`New Value: ${newValue}`)
 
+
+
+
             textarea.value = currentText.replace(rx, newValue);
             // console.log(currentText.replace(rx, newValue));
+
         });
+        save_regex_value.setAttribute("regexValue", newValue)
     }
 
+    button.addEventListener('click', function () {
     button.addEventListener('click', function () {
         var newValue = input.value;
         if (newValue !== '') {
